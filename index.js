@@ -34,6 +34,17 @@ const store = createStore(app);
 // this function will excecute every time the state changes
 store.subscribe(() => {
     console.log('The new state is', store.getState());
+    const { goals, todos } = store.getState();
+    // every time that the state changes it will delete all content from the list
+    document.getElementById('todos').innerHTML = '';
+    document.getElementById('goals').innerHTML = '';
+    // and re render here
+    goals.forEach((goal) => {
+        addGoalToDOM(goal);
+    });
+    todos.forEach((todo) => {
+        addTodoToDOM(todo);
+    });
 });
 /*---APP CODE---------------------------------------------*/
 const ADD_TODO = 'ADD_TODO';
@@ -114,7 +125,8 @@ const removeGoalAction = (id) => ({
     type: REMOVE_GOAL,
     id,
 });
-/* --------------------------------------------------------------------------- */
+
+/* ---DOM CODE------------------------------------------------------------------ */
 
 // ID generator
 function generateId() {
@@ -157,10 +169,29 @@ function addGoal() {
         })
     );
 }
-
+// if the add button is pressed it will add the value to the store
 document.getElementById('addTodoBtn').addEventListener('click', addTodo);
 document.getElementById('addGoalBtn').addEventListener('click', addGoal);
-
+// and every time the store changes the subscribe will run
+// where the items in store will be rendered with this functions
+function addTodoToDOM(todo) {
+    const liElement = document.createElement('li');
+    const imgElement = document.createElement('img');
+    liElement.innerText = todo.content;
+    imgElement.src = './icons/trash.svg';
+    imgElement.id = 'deleteGoalBtn';
+    document.getElementById('todos').appendChild(liElement);
+    document.getElementById('todos').appendChild(imgElement);
+}
+function addGoalToDOM(goal) {
+    const liElement = document.createElement('li');
+    const imgElement = document.createElement('img');
+    liElement.innerText = goal.content;
+    imgElement.src = './icons/trash.svg';
+    imgElement.id = 'deleteGoalBtn';
+    document.getElementById('goals').appendChild(liElement);
+    document.getElementById('goals').appendChild(imgElement);
+}
 // this line will modify the state by adding a todo
 /* store.dispatch(
     addTodoAction({
