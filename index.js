@@ -98,7 +98,7 @@ function goals(state = [] /*es6 sytax to array if undefined*/, action) {
             return state.filter((goal) => goal.id !== action.id);
         case TOGGLE_GOAL:
             return state.map((goal) =>
-                goal.id !== goal.id
+                goal.id !== action.id
                     ? goal
                     : Object.assign({}, goal, { status: !goal.status })
             );
