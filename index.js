@@ -140,6 +140,27 @@ function addTodo() {
         })
     );
 }
+
+function addGoal() {
+    // getting the user input for goal
+    const goalInput = document.getElementById('goalInput');
+    const content = goalInput.value;
+    // after getting the value it's going to clear
+    // the input content
+    goalInput.value = '';
+    // dispaching to modify the state
+    store.dispatch(
+        addGoalAction({
+            content,
+            status: false,
+            id: generateId(),
+        })
+    );
+}
+
+document.getElementById('addTodoBtn').addEventListener('click', addTodo);
+document.getElementById('addGoalBtn').addEventListener('click', addGoal);
+
 // this line will modify the state by adding a todo
 /* store.dispatch(
     addTodoAction({
