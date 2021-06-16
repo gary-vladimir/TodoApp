@@ -53,6 +53,7 @@ const TOGGLE_TODO = 'TOGGLE_TODO';
 
 const ADD_GOAL = 'ADD_GOAL';
 const REMOVE_GOAL = 'REMOVE_GOAL';
+const TOGGLE_GOAL = 'TOGGLE_GOAL';
 
 /* -------------------------------------------------------- */
 
@@ -80,7 +81,7 @@ function todos(state = [] /*es6 sytax to array if undefined*/, action) {
             return state.map((todo) =>
                 todo.id !== action.id
                     ? todo
-                    : Object.assign({}, todo, { complete: !todo.complete })
+                    : Object.assign({}, todo, { status: !todo.status })
             );
         default:
             return state;
@@ -95,6 +96,12 @@ function goals(state = [] /*es6 sytax to array if undefined*/, action) {
             return state.concat([action.goal]);
         case REMOVE_GOAL:
             return state.filter((goal) => goal.id !== action.id);
+        case TOGGLE_GOAL:
+            return state.map((goal) =>
+                goal.id !== goal.id
+                    ? goal
+                    : Object.assign({}, goal, { status: !goal.status })
+            );
         default:
             return state;
     }
@@ -123,6 +130,11 @@ const addGoalAction = (goal) => ({
 
 const removeGoalAction = (id) => ({
     type: REMOVE_GOAL,
+    id,
+});
+
+const toggleGoalAction = (id) => ({
+    type: TOGGLE_GOAL,
     id,
 });
 
@@ -180,6 +192,12 @@ function addTodoToDOM(todo) {
     liElement.innerText = todo.content;
     imgElement.src = './icons/trash.svg';
     imgElement.id = 'deleteGoalBtn';
+
+    liElement.style.textDecoration = todo.status ? 'line-through' : 'none';
+    liElement.addEventListener('click', () => {
+        store.dispatch(toggleTodoAction(todo.id));
+    });
+
     document.getElementById('todos').appendChild(liElement);
     document.getElementById('todos').appendChild(imgElement);
 }
@@ -189,6 +207,12 @@ function addGoalToDOM(goal) {
     liElement.innerText = goal.content;
     imgElement.src = './icons/trash.svg';
     imgElement.id = 'deleteGoalBtn';
+
+    liElement.style.textDecoration = goal.status ? 'line-through' : 'none';
+    liElement.addEventListener('click', () => {
+        store.dispatch(toggleGoalAction(goal.id));
+    });
+
     document.getElementById('goals').appendChild(liElement);
     document.getElementById('goals').appendChild(imgElement);
 }
