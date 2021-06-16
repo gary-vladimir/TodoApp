@@ -43,15 +43,16 @@ const TOGGLE_GOAL = 'TOGGLE_GOAL';
 // because we have more than one reducer
 // and createStore can only have one
 // we need to join them in this reducer
-function app(state = {} /*es6 sytax to obj if undefined*/, action) {
+
+/* function app(state = {}, action) {
     return {
         todos: todos(state.todos, action),
         goals: goals(state.goals, action),
     };
-}
+} */
 
 // the store that has dispatch subscribe and getState methods
-const store = Redux.createStore(app);
+const store = Redux.createStore(Redux.combineReducers({ todos, goals }));
 
 // this function will excecute every time the state changes
 store.subscribe(() => {
