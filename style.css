@@ -33,13 +33,13 @@ input::placeholder {
 }
 #addGoalBtn,
 #addTodoBtn {
-    margin: 0px;
     width: 36px;
     height: 36px;
     background-color: #4dc85a;
     border-radius: 18px;
     position: relative;
     border: none;
+    transform: translateX(-5px);
 }
 #addGoalBtn,
 #addTodoBtn:hover {
@@ -71,7 +71,7 @@ li {
 }
 ul > img {
     width: 30px;
-    transform: translate(2px, 10px);
+    transform: translate(10px, 10px);
 }
 ul > img:hover {
     cursor: pointer;
