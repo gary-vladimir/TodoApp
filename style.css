@@ -31,7 +31,7 @@ input {
 input::placeholder {
     color: #5e8284;
 }
-
+#addGoalBtn,
 #addTodoBtn {
     margin: 0px;
     width: 36px;
@@ -42,6 +42,7 @@ input::placeholder {
     border: none;
     transform: translateY(-5px);
 }
+#addGoalBtn,
 #addTodoBtn:hover {
     cursor: pointer;
 }
@@ -69,11 +70,11 @@ li {
     line-height: 40px;
     font-size: 20px;
 }
-#deleteTodoBtn {
+ul > img {
     width: 30px;
     transform: translate(2px, 10px);
 }
-#deleteTodoBtn:hover {
+ul > img:hover {
     cursor: pointer;
 }
 #line {
