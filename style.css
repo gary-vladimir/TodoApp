@@ -22,7 +22,7 @@ body {
 input {
     font-size: 17px;
     height: 30px;
-    width: 80%;
+    width: calc(100% - 60px);
     background-color: #effeff;
     border: 2px solid #5e8284;
     color: #0d364e;
@@ -40,7 +40,6 @@ input::placeholder {
     border-radius: 18px;
     position: relative;
     border: none;
-    transform: translateY(-5px);
 }
 #addGoalBtn,
 #addTodoBtn:hover {
