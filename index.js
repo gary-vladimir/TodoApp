@@ -193,6 +193,10 @@ function addTodoToDOM(todo) {
     imgElement.src = './icons/trash.svg';
     imgElement.id = 'deleteGoalBtn';
 
+    imgElement.addEventListener('click', () => {
+        store.dispatch(removeTodoAction(todo.id));
+    });
+
     liElement.style.textDecoration = todo.status ? 'line-through' : 'none';
     liElement.addEventListener('click', () => {
         store.dispatch(toggleTodoAction(todo.id));
@@ -207,6 +211,10 @@ function addGoalToDOM(goal) {
     liElement.innerText = goal.content;
     imgElement.src = './icons/trash.svg';
     imgElement.id = 'deleteGoalBtn';
+
+    imgElement.addEventListener('click', () => {
+        store.dispatch(removeGoalAction(goal.id));
+    });
 
     liElement.style.textDecoration = goal.status ? 'line-through' : 'none';
     liElement.addEventListener('click', () => {
