@@ -1,6 +1,6 @@
 /*-----LIBRARY CODE-------------------------------------*/
 
-function createStore(reducer) {
+/* function createStore(reducer) {
     let listeners = [];
 
     // state object
@@ -26,26 +26,8 @@ function createStore(reducer) {
     };
 
     return { getState, subscribe, dispatch };
-}
+} */
 
-// the store that has dispatch subscribe and getState methods
-const store = createStore(app);
-
-// this function will excecute every time the state changes
-store.subscribe(() => {
-    console.log('The new state is', store.getState());
-    const { goals, todos } = store.getState();
-    // every time that the state changes it will delete all content from the list
-    document.getElementById('todos').innerHTML = '';
-    document.getElementById('goals').innerHTML = '';
-    // and re render here
-    goals.forEach((goal) => {
-        addGoalToDOM(goal);
-    });
-    todos.forEach((todo) => {
-        addTodoToDOM(todo);
-    });
-});
 /*---APP CODE---------------------------------------------*/
 const ADD_TODO = 'ADD_TODO';
 const REMOVE_TODO = 'REMOVE_TODO';
@@ -67,6 +49,25 @@ function app(state = {} /*es6 sytax to obj if undefined*/, action) {
         goals: goals(state.goals, action),
     };
 }
+
+// the store that has dispatch subscribe and getState methods
+const store = Redux.createStore(app);
+
+// this function will excecute every time the state changes
+store.subscribe(() => {
+    console.log('The new state is', store.getState());
+    const { goals, todos } = store.getState();
+    // every time that the state changes it will delete all content from the list
+    document.getElementById('todos').innerHTML = '';
+    document.getElementById('goals').innerHTML = '';
+    // and re render here
+    goals.forEach((goal) => {
+        addGoalToDOM(goal);
+    });
+    todos.forEach((todo) => {
+        addTodoToDOM(todo);
+    });
+});
 
 // THIS IS A REDUCER FUNCTION
 // it takes the state and an action
