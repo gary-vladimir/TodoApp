@@ -42,6 +42,9 @@ const TOGGLE_TODO = 'TOGGLE_TODO';
 
 const ADD_GOAL = 'ADD_GOAL';
 const REMOVE_GOAL = 'REMOVE_GOAL';
+
+/* -------------------------------------------------------- */
+
 // THIS IS THE ROOT REDUCER
 // because we have more than one reducer
 // and createStore can only have one
@@ -85,7 +88,8 @@ function goals(state = [] /*es6 sytax to array if undefined*/, action) {
             return state;
     }
 }
-
+/* --------------------------------------------------------------------------- */
+// Action creators
 const addTodoAction = (todo) => ({
     type: ADD_TODO,
     todo,
@@ -110,15 +114,40 @@ const removeGoalAction = (id) => ({
     type: REMOVE_GOAL,
     id,
 });
+/* --------------------------------------------------------------------------- */
 
+// ID generator
+function generateId() {
+    return (
+        Math.random().toString(36).substring(2) +
+        new Date().getTime().toString(36)
+    );
+}
+
+function addTodo() {
+    // getting the user input for todo
+    const todoInput = document.getElementById('todoInput');
+    const content = todoInput.value;
+    // after getting the value it's going to clear
+    // the input content
+    todoInput.value = '';
+    // dispaching to modify the state
+    store.dispatch(
+        addTodoAction({
+            content,
+            status: false,
+            id: generateId(),
+        })
+    );
+}
 // this line will modify the state by adding a todo
-store.dispatch(
+/* store.dispatch(
     addTodoAction({
         id: '0',
         name: 'Do excersice',
         complete: false,
     })
-);
+); */
 /* 
 -------RULES TO INCREASE PREDICTABILITY--------------------
 
