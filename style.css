@@ -90,11 +90,13 @@ ul > img:hover {
     flex-direction: column;
     align-items: center;
 }
+
 @media (min-width: 800px) {
     #container {
         padding-top: 100px;
         flex-direction: row;
         justify-content: center;
+        align-items: flex-start;
         gap: 20px;
     }
     #line {
