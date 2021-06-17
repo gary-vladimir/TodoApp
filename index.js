@@ -51,8 +51,27 @@ const TOGGLE_GOAL = 'TOGGLE_GOAL';
     };
 } */
 
+const checkForYoutube = (store) => (next) => (action) => {
+    if (
+        action.type === ADD_TODO &&
+        action.todo.content.toLowerCase().includes('youtube')
+    ) {
+        return alert('Nope no youtube allowed');
+    }
+    if (
+        action.type === ADD_GOAL &&
+        action.goal.content.toLowerCase().includes('youtube')
+    ) {
+        return alert('Nope no youtube allowed');
+    }
+    return next(action);
+};
+
 // the store that has dispatch subscribe and getState methods
-const store = Redux.createStore(Redux.combineReducers({ todos, goals }));
+const store = Redux.createStore(
+    Redux.combineReducers({ todos, goals }),
+    Redux.applyMiddleware(checkForYoutube)
+);
 
 // this function will excecute every time the state changes
 store.subscribe(() => {
@@ -183,6 +202,7 @@ function addGoal() {
         })
     );
 }
+
 // if the add button is pressed it will add the value to the store
 document.getElementById('addTodoBtn').addEventListener('click', addTodo);
 document.getElementById('addGoalBtn').addEventListener('click', addGoal);
