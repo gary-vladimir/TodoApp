@@ -7,47 +7,20 @@
         <link rel="stylesheet" href="style.css" />
         <title>Document</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.min.js"></script>
+        <script src="https://unpkg.com/react@16.3.0-alpha.1/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.3.0-alpha.1/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
     </head>
     <body>
-        <div id="container">
-            <div id="todoCard">
-                <h1>TODO LIST</h1>
-                <div style="display: flex; justify-content: space-between">
-                    <input type="text" placeholder="Add todo" id="todoInput" />
-                    <button id="addTodoBtn">
-                        <img
-                            src="./icons/add.svg"
-                            alt="addbutton"
-                            id="addBtn"
-                            width="25px"
-                            height="25px"
-                        />
-                    </button>
-                </div>
-                <ul id="todos"></ul>
-            </div>
+        <!--  with react  -->
+        <div id="root"></div>
 
-            <!-- todos card -->
-            <div id="line"></div>
-            <!-- goals card  -->
-
-            <div id="todoCard">
-                <h1>GOALS</h1>
-                <div style="display: flex; justify-content: space-between">
-                    <input type="text" placeholder="Add Goal" id="goalInput" />
-                    <button id="addGoalBtn">
-                        <img
-                            src="./icons/add.svg"
-                            alt="addbutton"
-                            id="addBtn"
-                            width="25px"
-                            height="25px"
-                        />
-                    </button>
-                </div>
-                <ul id="goals"></ul>
-            </div>
-        </div>
-        <script src="./index.js"></script>
+        <script type="text/babel" src="./react.js"></script>
     </body>
+    <style>
+        #todoCard > div {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
 </html>
