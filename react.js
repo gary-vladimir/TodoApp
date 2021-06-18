@@ -6,16 +6,18 @@ const ADD_GOAL = 'ADD_GOAL';
 const REMOVE_GOAL = 'REMOVE_GOAL';
 const TOGGLE_GOAL = 'TOGGLE_GOAL';
 
+const RECEIVE_DATA = 'RECEIVE_DATA';
+
 const checkForYoutube = (store) => (next) => (action) => {
     if (
         action.type === ADD_TODO &&
-        action.todo.content.toLowerCase().includes('youtube')
+        action.todo.name.toLowerCase().includes('youtube')
     ) {
         return alert('Nope no youtube allowed');
     }
     if (
         action.type === ADD_GOAL &&
-        action.goal.content.toLowerCase().includes('youtube')
+        action.goal.name.toLowerCase().includes('youtube')
     ) {
         return alert('Nope no youtube allowed');
     }
@@ -41,8 +43,11 @@ function todos(state = [] /*es6 sytax to array if undefined*/, action) {
             return state.map((todo) =>
                 todo.id !== action.id
                     ? todo
-                    : Object.assign({}, todo, { status: !todo.status })
+                    : Object.assign({}, todo, { complete: !todo.complete })
             );
+        case RECEIVE_DATA:
+            return action.todos;
+
         default:
             return state;
     }
@@ -60,14 +65,26 @@ function goals(state = [] /*es6 sytax to array if undefined*/, action) {
             return state.map((goal) =>
                 goal.id !== action.id
                     ? goal
-                    : Object.assign({}, goal, { status: !goal.status })
+                    : Object.assign({}, goal, { complete: !goal.complete })
             );
+        case RECEIVE_DATA:
+            return action.goals;
+
         default:
             return state;
     }
 }
 
 // Action creators
+
+function receiveDataAction(todos, goals) {
+    return {
+        type: RECEIVE_DATA,
+        todos,
+        goals,
+    };
+}
+
 const addTodoAction = (todo) => ({
     type: ADD_TODO,
     todo,
@@ -109,6 +126,13 @@ function generateId() {
 class App extends React.Component {
     componentDidMount() {
         const { store } = this.props;
+
+        Promise.all([API.fetchTodos(), API.fetchGoals()]).then(
+            ([todos, goals]) => {
+                store.dispatch(receiveDataAction(todos, goals));
+            }
+        );
+
         store.subscribe(() => {
             this.forceUpdate();
         });
@@ -131,15 +155,17 @@ function List(props) {
     return (
         <ul id={props.id}>
             {props.items.map((e) => (
-                <React.Fragment key={e.content}>
+                <React.Fragment key={e.name}>
                     <li
                         key={e.id}
                         onClick={() => props.toggle(e)}
                         style={{
-                            textDecoration: e.status ? 'line-through' : 'none',
+                            textDecoration: e.complete
+                                ? 'line-through'
+                                : 'none',
                         }}
                     >
-                        {e.content}
+                        {e.name}
                     </li>
                     <img
                         key={e.id + 1}
@@ -156,13 +182,13 @@ function List(props) {
 class Todos extends React.Component {
     addItem = (e) => {
         e.preventDefault();
-        const content = this.input.value;
+        const name = this.input.value;
         this.input.value = '';
 
         this.props.store.dispatch(
             addTodoAction({
                 id: generateId(),
-                content,
+                name,
             })
         );
     };
@@ -206,13 +232,13 @@ class Todos extends React.Component {
 class Goals extends React.Component {
     addItem = (e) => {
         e.preventDefault();
-        const content = this.input.value;
+        const name = this.input.value;
         this.input.value = '';
 
         this.props.store.dispatch(
             addGoalAction({
                 id: generateId(),
-                content,
+                name,
             })
         );
     };
