@@ -55,6 +55,11 @@ ul {
     padding-left: 0px;
 }
 li {
+    user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
     display: inline-flex;
     width: 75%;
     background-image: url(./icons/bullet.svg);
